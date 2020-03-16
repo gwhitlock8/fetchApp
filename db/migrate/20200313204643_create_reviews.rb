@@ -1,0 +1,16 @@
+class CreateReviews < ActiveRecord::Migration[6.0]
+  def change
+    create_table :reviews do |t|
+      t.references :user, null: false, foreign_key: true
+      t.references :dog_park, null: false, foreign_key: true
+      t.string :overall_rating
+      t.integer :cleanliness
+      t.integer :amenenties
+      t.integer :parking
+      t.string :title
+      t.string :notes
+
+      t.timestamps
+    end
+  end
+end

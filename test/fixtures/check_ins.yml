@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dog: one
+  dog_park: one
+  checkout_time: 2020-03-13 15:42:28
+
+two:
+  dog: two
+  dog_park: two
+  checkout_time: 2020-03-13 15:42:28
