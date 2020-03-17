@@ -79,11 +79,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    marginVertical: 4
+    marginVertical: 4,
+    fontFamily: "noto-sans-bold"
   },
   location: {
     fontSize: 12,
-    color: "#888"
+    color: "#888",
+    fontFamily: "noto-sans"
   },
   actions: {
     flexDirection: "row",

@@ -17,6 +17,12 @@ const DogParkNavigator = createStackNavigator(
       headerStyle: {
         backgroundColor: Platform.OS === "android" ? Colors.primary : ""
       },
+      headerTitleStyle: {
+        fontFamily: "noto-sans-bold"
+      },
+      headerBackTitleStyle: {
+        fontFamily: "noto-sans"
+      },
       headerTintColor:
         Platform.OS === "android" ? Colors.secondary : Colors.primary
     }

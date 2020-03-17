@@ -6,7 +6,7 @@ const DOG_PARKS = [
     "Barkin' Springs",
     "2201 Barton Springs Rd, Austin, TX 78746",
     "https://static.rootsrated.com/image/upload/s--hCSD_TfZ--/t_rr_large_natural/bt7d072i4b11x90m2ymn.jpg",
-    "Barkin’ Springs is the wading area right outside of Barton Springs that does not require an entrance fee and is a local favorite to take pets to cool off during a hot day",
+    "Barkin Springs is the wading area right outside of Barton Springs that does not require an entrance fee and is a local favorite to take pets to cool off during a hot day",
     4,
     false,
     true
