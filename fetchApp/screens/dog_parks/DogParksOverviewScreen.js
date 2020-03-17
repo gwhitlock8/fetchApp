@@ -1,6 +1,8 @@
 import React from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
 import { useSelector } from "react-redux";
+
+import DogPark from "../../components/DogPark";
 
 const DogParksOverviewScreen = props => {
   const dogParks = useSelector(state => state.dogParks.allDogParks);
@@ -8,7 +10,22 @@ const DogParksOverviewScreen = props => {
   return (
     <FlatList
       data={dogParks}
-      renderItem={itemData => <Text>{itemData.item.name}</Text>}
+      renderItem={itemData => {
+        return (
+          <DogPark
+            image={itemData.item.imageUrl}
+            name={itemData.item.name}
+            location={itemData.item.location}
+            onViewDetail={() => {
+              props.navigation.navigate("DogParkDetail", {
+                dogParkId: itemData.item.id,
+                dogParkName: itemData.item.name
+              });
+            }}
+            onCheckIn={() => {}}
+          />
+        );
+      }}
     />
   );
 };

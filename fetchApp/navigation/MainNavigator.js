@@ -3,11 +3,14 @@ import { createStackNavigator } from "react-navigation-stack";
 import { Platform } from "react-native";
 
 import DogParksOverviewScreen from "../screens/dog_parks/DogParksOverviewScreen";
+import DogParkDetailsScreen from "../screens/dog_parks/DogParkDetailsScreen";
+
 import Colors from "../constants/Colors";
 
 const DogParkNavigator = createStackNavigator(
   {
-    DogParkOverview: DogParksOverviewScreen
+    DogParkOverview: DogParksOverviewScreen,
+    DogParkDetail: DogParkDetailsScreen
   },
   {
     defaultNavigationOptions: {
