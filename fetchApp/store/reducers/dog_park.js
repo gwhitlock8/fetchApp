@@ -1,4 +1,4 @@
-import DOG_PARKS from "../../data/dummy-data";
+import { DOG_PARKS } from "../../data/dummy-data";
 
 const initialState = {
   allDogParks: DOG_PARKS

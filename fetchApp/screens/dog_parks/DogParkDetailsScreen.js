@@ -5,11 +5,12 @@ import {
   Image,
   Button,
   StyleSheet,
-  ScrollView,
-  Icon
+  ScrollView
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import * as checkInActions from "../../store/actions/check_ins";
 
 import Colors from "../../constants/Colors";
 
@@ -20,15 +21,32 @@ const DogParkDetailsScreen = props => {
     state.dogParks.allDogParks.find(park => park.id === dogParkId)
   );
 
+  const checkIns = useSelector(state => state.checkIns.allCheckIns);
+  const isCheckedIn = Object.keys(checkIns).find(id => id === dogParkId);
+
+  const dispatch = useDispatch();
+
   return (
     <ScrollView>
       <Image style={styles.image} source={{ uri: selectedDogPark.imageUrl }} />
       <View style={styles.actions}>
-        <Button
-          color={Colors.primarySecond}
-          title="Check In"
-          onPress={() => {}}
-        />
+        {isCheckedIn ? (
+          <Button
+            color={Colors.primarySecond}
+            title="Checkout"
+            onPress={() => {
+              dispatch(checkInActions.checkout(selectedDogPark));
+            }}
+          />
+        ) : (
+          <Button
+            color={Colors.primarySecond}
+            title="Check In"
+            onPress={() => {
+              dispatch(checkInActions.checkIn(selectedDogPark));
+            }}
+          />
+        )}
       </View>
       <Text style={styles.location}>{selectedDogPark.location}</Text>
       <Text style={styles.description}>{selectedDogPark.description}</Text>

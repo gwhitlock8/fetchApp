@@ -4,15 +4,18 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 import dogParksReducer from "./store/reducers/dog_park";
+import checkInsReducer from "./store/reducers/check_ins";
 import MainNavigator from "./navigation/MainNavigator";
 
 const rootReducer = combineReducers({
-  dogParks: dogParksReducer
+  dogParks: dogParksReducer,
+  checkIns: checkInsReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 const fetchFonts = () => {
   return Font.loadAsync({

@@ -1,6 +1,7 @@
 import DogPark from "../models/dog_park";
+import Dog from "../models/dog";
 
-const DOG_PARKS = [
+export const DOG_PARKS = [
   new DogPark(
     "dp1",
     "Barkin' Springs",
@@ -33,4 +34,15 @@ const DOG_PARKS = [
   )
 ];
 
-export default DOG_PARKS;
+export const DOG = [
+  new Dog(
+    "d1",
+    "Mack",
+    "Pitbull Mix",
+    "3",
+    "docile",
+    "being chased",
+    "children",
+    "https://tinyurl.com/ql6cb99"
+  )
+];

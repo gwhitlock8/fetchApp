@@ -1,11 +1,14 @@
 import React from "react";
 import { FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import DogPark from "../../components/DogPark";
+import * as checkInActions from "../../store/actions/check_ins";
 
 const DogParksOverviewScreen = props => {
   const dogParks = useSelector(state => state.dogParks.allDogParks);
+
+  const dispatch = useDispatch();
 
   return (
     <FlatList
@@ -22,7 +25,9 @@ const DogParksOverviewScreen = props => {
                 dogParkName: itemData.item.name
               });
             }}
-            onCheckIn={() => {}}
+            onCheckIn={() => {
+              dispatch(checkInActions.checkIn(itemData.item));
+            }}
           />
         );
       }}

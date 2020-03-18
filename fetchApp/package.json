@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.7",
@@ -25,11 +26,14 @@
     "react-navigation-header-buttons": "^3.0.5",
     "react-navigation-stack": "^2.3.1",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-preset-expo": "~8.0.0"
+    "babel-preset-expo": "~8.0.0",
+    "react-native-debugger-open": "^0.3.24",
+    "redux-devtools-extension": "^2.13.8"
   },
   "private": true
 }

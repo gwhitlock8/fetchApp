@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 
 import DogParksOverviewScreen from "../screens/dog_parks/DogParksOverviewScreen";
 import DogParkDetailsScreen from "../screens/dog_parks/DogParkDetailsScreen";
+import EditDogScreen from "../screens/user/EditDogScreen";
 
 import Colors from "../constants/Colors";
 
