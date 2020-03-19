@@ -8,11 +8,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import dogParksReducer from "./store/reducers/dog_park";
 import checkInsReducer from "./store/reducers/check_ins";
+import dogReducer from "./store/reducers/dog";
+
 import MainNavigator from "./navigation/MainNavigator";
 
 const rootReducer = combineReducers({
   dogParks: dogParksReducer,
-  checkIns: checkInsReducer
+  checkIns: checkInsReducer,
+  dogs: dogReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools());

@@ -1,52 +1,35 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
 
 import * as dogActions from "../../store/actions/dog";
 
-const EditDogScreen = props => {
-  const dogId = props.navigation.getParam("dogId");
-
-  const editedDog = useSelector(state =>
-    state.dogs.allDogs.find(dog => dog.id === dogId)
-  );
+const CreateDogScreen = props => {
+  const [name, setName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [age, setAge] = useState("");
+  const [temperment, setTemperment] = useState("");
+  const [likes, setLikes] = useState("");
+  const [dislikes, setDislikes] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const dispatch = useDispatch();
 
-  const [name, setName] = useState(editedDog.name);
-  const [breed, setBreed] = useState(editedDog.breed);
-  const [age, setAge] = useState(editedDog.age);
-  const [temperment, setTemperment] = useState(editedDog.temperment);
-  const [likes, setLikes] = useState(editedDog.likes);
-  const [dislikes, setDislikes] = useState(editedDog.dislikes);
-  const [imageUrl, setImageUrl] = useState(editedDog.imageUrl);
-
   const submitHandler = useCallback(() => {
     dispatch(
-      dogActions.updateDog(
-        dogId,
+      dogActions.createDog(
         name,
         breed,
-        age,
+        age.toString(),
         temperment,
         likes,
         dislikes,
         imageUrl
       )
     );
-  }, [
-    dispatch,
-    dogId,
-    name,
-    breed,
-    age,
-    temperment,
-    likes,
-    dislikes,
-    imageUrl
-  ]);
+  }, [dispatch, name, breed, age, temperment, likes, dislikes, imageUrl]);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
@@ -116,11 +99,11 @@ const EditDogScreen = props => {
   );
 };
 
-EditDogScreen.navigationOptions = navData => {
+CreateDogScreen.navigationOptions = navData => {
   const submitFn = navData.navigation.getParam("submit");
 
   return {
-    headerTitle: "Edit",
+    headerTitle: "Create Dog Profile",
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item title="Save" iconName={"check"} onPress={submitFn} />
@@ -148,4 +131,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EditDogScreen;
+export default CreateDogScreen;

@@ -1,33 +1,76 @@
+import React from "react";
+
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { Platform } from "react-native";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
-import DogParksOverviewScreen from "../screens/dog_parks/DogParksOverviewScreen";
-import DogParkDetailsScreen from "../screens/dog_parks/DogParkDetailsScreen";
-import EditDogScreen from "../screens/user/EditDogScreen";
+import { Platform } from "react-native";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+
+import { DogParkNavigator } from "./DogParkNavigator";
+import { UserNavigator } from "./UserNavigator";
 
 import Colors from "../constants/Colors";
 
-const DogParkNavigator = createStackNavigator(
-  {
-    DogParkOverview: DogParksOverviewScreen,
-    DogParkDetail: DogParkDetailsScreen
+const userParkTabScreenConfig = {
+  UserDogs: {
+    screen: UserNavigator,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return <Feather name="user" size={25} color={Colors.secondary} />;
+      },
+      tabColor: Colors.primary,
+      tabBarLabel:
+        Platform.OS === "android" ? (
+          <Text styles={{ fontFamily: "noto-sans-bold" }}>User Info</Text>
+        ) : (
+          "User Info"
+        )
+    }
   },
-  {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.OS === "android" ? Colors.primary : ""
+  DogParks: {
+    screen: DogParkNavigator,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return (
+          <MaterialCommunityIcons
+            name="bone"
+            size={25}
+            color={Colors.secondary}
+          />
+        );
       },
-      headerTitleStyle: {
-        fontFamily: "noto-sans-bold"
-      },
-      headerBackTitleStyle: {
-        fontFamily: "noto-sans"
-      },
-      headerTintColor:
-        Platform.OS === "android" ? Colors.secondary : Colors.primary
+      tabColor: Colors.primary,
+      tabBarLabel:
+        Platform.OS === "android" ? (
+          <Text styles={{ fontFamily: "noto-sans-bold" }}>Dog Parks</Text>
+        ) : (
+          "Dog Parks"
+        )
     }
   }
-);
+};
 
-export default createAppContainer(DogParkNavigator);
+const UserParkTabNavigator =
+  Platform.OS === "android"
+    ? createMaterialBottomTabNavigator(userParkTabScreenConfig, {
+        activeColor: "white",
+        shifting: true
+      })
+    : createBottomTabNavigator(userParkTabScreenConfig, {
+        tabBarOptions: {
+          labelStyle: {
+            fontFamily: "noto-sans-bold"
+          },
+          activeTintColor: Colors.primarySecond
+        }
+      });
+
+const MainNavigator = createStackNavigator({
+  UserParks: {
+    screen: UserParkTabNavigator
+  }
+});
+
+export default createAppContainer(MainNavigator);

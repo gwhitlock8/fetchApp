@@ -5,12 +5,17 @@ import {
   Image,
   Button,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Platform
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import * as checkInActions from "../../store/actions/check_ins";
+
+import HeaderButton from "../../components/UI/HeaderButton";
 
 import Colors from "../../constants/Colors";
 
@@ -96,7 +101,18 @@ const DogParkDetailsScreen = props => {
 
 DogParkDetailsScreen.navigationOptions = navData => {
   return {
-    headerTitle: navData.navigation.getParam("dogParkName")
+    headerTitle: navData.navigation.getParam("dogParkName"),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Check-Ins"
+          iconName={"location"}
+          onPress={() => {
+            navData.navigation.navigate("CheckIns");
+          }}
+        />
+      </HeaderButtons>
+    )
   };
 };
 

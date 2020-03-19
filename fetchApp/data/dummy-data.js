@@ -34,15 +34,15 @@ export const DOG_PARKS = [
   )
 ];
 
-export const DOG = [
+export const DOGS = [
   new Dog(
-    "d1",
+    "1",
     "Mack",
     "Pitbull Mix",
     "3",
     "docile",
     "being chased",
     "children",
-    "https://tinyurl.com/ql6cb99"
+    "http://globaltravelsblog.com/wp-content/uploads/2014/05/Southeastern-Guide-Dogs-Puppy.jpg"
   )
 ];
