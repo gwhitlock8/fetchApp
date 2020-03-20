@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import Colors from "../constants/Colors";
+import Card from "./UI/Card";
 
 const DogPark = props => {
   let TouchableComponent = TouchableOpacity;
@@ -20,7 +21,7 @@ const DogPark = props => {
   }
 
   return (
-    <View style={styles.park}>
+    <Card style={styles.park}>
       <View style={styles.touchable}>
         <TouchableComponent onPress={props.onViewDetail} useForeground>
           <View>
@@ -46,19 +47,12 @@ const DogPark = props => {
           </View>
         </TouchableComponent>
       </View>
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   park: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     height: 300,
     margin: 20
   },

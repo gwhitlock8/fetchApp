@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, Alert, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
@@ -9,6 +9,19 @@ import * as dogActions from "../../store/actions/dog";
 
 const UserDogsScreen = props => {
   const dogs = useSelector(state => state.dogs.allDogs);
+
+  const deleteHandler = id => {
+    Alert.alert("Are you sure?", "Do you really want to delete this pup?", [
+      { text: "No", style: "default" },
+      {
+        text: "Yes",
+        style: "destructive",
+        onPress: () => {
+          dispatch(dogActions.deleteDog(id));
+        }
+      }
+    ]);
+  };
 
   const dispatch = useDispatch();
 
@@ -28,6 +41,7 @@ const UserDogsScreen = props => {
                 dogName: itemData.item.name
               });
             }}
+            onDelete={deleteHandler.bind(this, itemData.item.id)}
           />
         );
       }}
@@ -41,10 +55,14 @@ UserDogsScreen.navigationOptions = navData => {
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="Create New Dog Profile"
-          iconName="circle-with-plus"
+          title="Create"
+          iconName={
+            Platform.OS === "android"
+              ? "md-add-circle-outline"
+              : "ios-add-circle-outline"
+          }
           onPress={() => {
-            navData.navigation.navigate("CreateDog");
+            navData.navigation.navigate("CreateEditDog");
           }}
         />
       </HeaderButtons>

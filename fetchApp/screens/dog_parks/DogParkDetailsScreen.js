@@ -106,7 +106,7 @@ DogParkDetailsScreen.navigationOptions = navData => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Check-Ins"
-          iconName={"location"}
+          iconName={Platform.OS === "android" ? "md-pin" : "ios-pin"}
           onPress={() => {
             navData.navigation.navigate("CheckIns");
           }}

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import Colors from "../constants/Colors";
+import Card from "./UI/Card";
 
 const Dog = props => {
   let TouchableComponent = TouchableOpacity;
@@ -20,7 +21,7 @@ const Dog = props => {
   }
 
   return (
-    <View style={styles.dog}>
+    <Card style={styles.dog}>
       <View style={styles.touchable}>
         <TouchableComponent onPress={props.onViewDetail} useForeground>
           <View>
@@ -37,23 +38,17 @@ const Dog = props => {
                 title="View Details"
                 onPress={props.onViewDetail}
               />
+              <Button title="Delete" color="red" onPress={props.onDelete} />
             </View>
           </View>
         </TouchableComponent>
       </View>
-    </View>
+    </Card>
   );
 };
 
 const styles = StyleSheet.create({
   dog: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     height: 300,
     margin: 20
   },
@@ -91,6 +86,13 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     height: "20%"
+  },
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    height: "20%",
+    paddingVertical: 10,
+    paddingHorizontal: 20
   }
 });
 

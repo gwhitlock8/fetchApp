@@ -1,5 +1,5 @@
 import { DOGS } from "../../data/dummy-data";
-import { CREATE_DOG, UPDATE_DOG } from "../actions/dog";
+import { CREATE_DOG, UPDATE_DOG, DELETE_DOG } from "../actions/dog";
 
 import Dog from "../../models/dog";
 
@@ -12,10 +12,11 @@ export default (state = initialState, action) => {
     case CREATE_DOG:
       const enteredDog = action.dog;
       const newDog = new Dog(
-        Math.floor(Math.random(1, 1000) * 1),
+        enteredDog.id,
         enteredDog.name,
         enteredDog.breed,
         enteredDog.age,
+        enteredDog.weight,
         enteredDog.temperment,
         enteredDog.likes,
         enteredDog.dislikes,
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
         newInfoDog.name,
         newInfoDog.breed,
         newInfoDog.age,
+        newInfoDog.weight,
         newInfoDog.temperment,
         newInfoDog.likes,
         newInfoDog.dislikes,
@@ -46,6 +48,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allDogs: updatedDogs
+      };
+    case DELETE_DOG:
+      return {
+        ...state,
+        allDogs: state.allDogs.filter(dog => dog.id !== action.dogId)
       };
   }
   return state;

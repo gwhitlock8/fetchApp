@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -69,7 +70,10 @@ const UserParkTabNavigator =
 
 const MainNavigator = createStackNavigator({
   UserParks: {
-    screen: UserParkTabNavigator
+    screen: UserParkTabNavigator,
+    navigationOptions: {
+      headerShown: false
+    }
   }
 });
 

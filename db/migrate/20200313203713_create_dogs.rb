@@ -9,6 +9,7 @@ class CreateDogs < ActiveRecord::Migration[6.0]
       t.string :temperment
       t.string :likes
       t.string :dislikes
+      t.string :imageUrl
 
       t.timestamps
     end

@@ -36,10 +36,11 @@ export const DOG_PARKS = [
 
 export const DOGS = [
   new Dog(
-    "1",
+    1,
     "Mack",
     "Pitbull Mix",
     "3",
+    "50",
     "docile",
     "being chased",
     "children",

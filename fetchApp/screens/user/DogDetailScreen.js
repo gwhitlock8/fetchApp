@@ -1,12 +1,11 @@
 import React from "react";
 import {
-  ScrollView,
   View,
   Text,
   Image,
-  Button,
   StyleSheet,
-  SectionList
+  SectionList,
+  Platform
 } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -32,6 +31,7 @@ const DogDetailScreen = props => {
           sections={[
             { title: "Breed", data: [selectedDog.breed] },
             { title: "Age", data: [selectedDog.age + " years"] },
+            { title: "Approx. Weight", data: [selectedDog.weight + " lbs."] },
             { title: "Temperment", data: [selectedDog.temperment] },
             { title: "Likes", data: [selectedDog.likes] },
             { title: "Dislikes", data: [selectedDog.dislikes] }
@@ -56,9 +56,9 @@ DogDetailScreen.navigationOptions = navData => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Edit"
-          iconName={"edit"}
+          iconName={Platform.OS === "android" ? "md-create" : "ios-create"}
           onPress={() => {
-            navData.navigation.navigate("EditDog", {
+            navData.navigation.navigate("CreateEditDog", {
               dogId: dogId
             });
           }}

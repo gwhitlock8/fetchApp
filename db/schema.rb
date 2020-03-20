@@ -28,7 +28,9 @@ ActiveRecord::Schema.define(version: 2020_03_13_204643) do
   create_table "dog_parks", force: :cascade do |t|
     t.string "name"
     t.string "location"
+    t.string "description"
     t.string "overall_rating"
+    t.string "imageUrl"
     t.boolean "fenced?"
     t.boolean "off_leash?"
     t.datetime "created_at", precision: 6, null: false
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_204643) do
     t.string "temperment"
     t.string "likes"
     t.string "dislikes"
+    t.string "imageUrl"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_dogs_on_user_id"

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import ReduxThunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import dogParksReducer from "./store/reducers/dog_park";
@@ -18,7 +19,11 @@ const rootReducer = combineReducers({
   dogs: dogReducer
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const thunkAndDevTools = () => {
+  composeWithDevTools();
+  applyMiddleware(ReduxThunk);
+};
+const store = createStore(rootReducer, thunkAndDevTools());
 
 const fetchFonts = () => {
   return Font.loadAsync({

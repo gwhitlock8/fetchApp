@@ -13,31 +13,38 @@ export const createDog = (
   name,
   breed,
   age,
+  weight,
   temperment,
   likes,
   dislikes,
   imageUrl
 ) => {
-  return {
-    type: CREATE_DOG,
-    dog: {
-      id: Math.floor(Math.random() * 1000).toString(),
-      name,
-      breed,
-      age,
-      temperment,
-      likes,
-      dislikes,
-      imageUrl
-    }
+  return dispatch => {
+    //execute async code
+    fetch("http");
+    dispatch({
+      type: CREATE_DOG,
+      dog: {
+        id: Math.floor(Math.random() * 1000),
+        name,
+        breed,
+        age,
+        weight,
+        temperment,
+        likes,
+        dislikes,
+        imageUrl
+      }
+    });
   };
 };
 
 export const updateDog = (
-  id,
+  dogId,
   name,
   breed,
   age,
+  weight,
   temperment,
   likes,
   dislikes,
@@ -45,11 +52,12 @@ export const updateDog = (
 ) => {
   return {
     type: UPDATE_DOG,
-    id: id,
+    id: dogId,
     dog: {
       name,
       breed,
       age,
+      weight,
       temperment,
       likes,
       dislikes,

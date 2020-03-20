@@ -3,7 +3,9 @@ class CreateDogParks < ActiveRecord::Migration[6.0]
     create_table :dog_parks do |t|
       t.string :name
       t.string :location
+      t.string :description
       t.string :overall_rating
+      t.string :imageUrl
       t.boolean :fenced?
       t.boolean :off_leash?
 
