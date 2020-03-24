@@ -35,3 +35,5 @@ fetchApp/web-report/
 
 # macOS
 .DS_Store
+
+.env

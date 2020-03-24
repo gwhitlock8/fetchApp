@@ -17,4 +17,19 @@ class DogsController < ApplicationController
         }
     end
 
+    def create
+        dog = Dog.create(dog_params)
+        if dog.valid?
+            render json: {dog: dog}, status: :ok
+        else
+            render json: {errors: dog.errors.full_messages}, status: :not_acceptable
+        end
+    end
+
+    private
+
+    def dog_params
+        params.permit(:name, :breed, :age, :weight, :temperment, :likes, :dislikes,:imageUrl, :user_id)
+    end
+
 end

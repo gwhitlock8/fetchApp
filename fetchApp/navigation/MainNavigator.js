@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -11,6 +11,7 @@ import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
 import { DogParkNavigator } from "./DogParkNavigator";
 import { UserNavigator } from "./UserNavigator";
+import Auth from "../screens/user/AuthScreen";
 
 import Colors from "../constants/Colors";
 
@@ -77,4 +78,9 @@ const MainNavigator = createStackNavigator({
   }
 });
 
-export default createAppContainer(MainNavigator);
+export default createAppContainer(
+  createSwitchNavigator({
+    Auth: Auth,
+    Main: MainNavigator
+  })
+);

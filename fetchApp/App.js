@@ -4,26 +4,27 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import ReduxThunk from "redux-thunk";
+import Thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import dogParksReducer from "./store/reducers/dog_park";
 import checkInsReducer from "./store/reducers/check_ins";
 import dogReducer from "./store/reducers/dog";
+import authReducer from "./store/reducers/auth";
 
-import MainNavigator from "./navigation/MainNavigator";
+import MainNavigator, { AppNavigator } from "./navigation/MainNavigator";
 
 const rootReducer = combineReducers({
   dogParks: dogParksReducer,
   checkIns: checkInsReducer,
-  dogs: dogReducer
+  dogs: dogReducer,
+  auth: authReducer
 });
 
-const thunkAndDevTools = () => {
-  composeWithDevTools();
-  applyMiddleware(ReduxThunk);
-};
-const store = createStore(rootReducer, thunkAndDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(Thunk))
+);
 
 const fetchFonts = () => {
   return Font.loadAsync({
