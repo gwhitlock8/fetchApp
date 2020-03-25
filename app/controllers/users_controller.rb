@@ -1,18 +1,15 @@
 class UsersController < ApplicationController
-
     skip_before_action :require_login, only: [:create]
 
 
     def create
-        begin
-            user = User.create(user_params)
+        user = User.create(user_params)
+        if user.valid?
             payload = {user_id: user.id}
             token = encode_token(payload)
-            render json: {user: user, jwt: token, message: success}, status: :ok
-            puts 'SAAAAVVVVVVE'
-        rescue => exception
-            puts 'ERRRRRROOOOOORR'
-            render json: {code: 500, message: 'User with that email already exists'}, status: :not_acceptable
+            render json: {user: user, jwt: token, message: 'success'}, status: :ok
+        else 
+            render json: {message: user.errors.full_messages[0]}, status: :not_acceptable
         end
     end
 

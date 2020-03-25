@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 2020_03_13_204643) do
     t.string "description"
     t.string "overall_rating"
     t.string "imageUrl"
-    t.boolean "fenced?"
-    t.boolean "off_leash?"
+    t.boolean "fenced"
+    t.boolean "off_leash"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

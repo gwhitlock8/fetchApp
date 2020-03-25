@@ -14,6 +14,7 @@ import { UserNavigator } from "./UserNavigator";
 import Auth from "../screens/user/AuthScreen";
 
 import Colors from "../constants/Colors";
+import { defaultStackNavigationOptions } from "./defaultStackNavOptions";
 
 const userParkTabScreenConfig = {
   UserDogs: {

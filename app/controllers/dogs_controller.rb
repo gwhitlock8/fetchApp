@@ -2,7 +2,6 @@ class DogsController < ApplicationController
 
     def index
         dogs = Dog.all
-
         render json: {
             status: :completed,
             dogs: dogs

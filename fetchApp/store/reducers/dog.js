@@ -1,14 +1,19 @@
-import { DOGS } from "../../data/dummy-data";
-import { CREATE_DOG, UPDATE_DOG, DELETE_DOG } from "../actions/dog";
+import { CREATE_DOG, UPDATE_DOG, DELETE_DOG, SET_DOGS } from "../actions/dog";
 
 import Dog from "../../models/dog";
 
 const initialState = {
-  allDogs: DOGS
+  allDogs: [],
+  userDogs: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_DOGS:
+      return {
+        allDogs: action.dogs,
+        userDogs: action.dogs.filter(prod => prod.user_id === action.userId)
+      };
     case CREATE_DOG:
       const enteredDog = action.dog;
       const newDog = new Dog(

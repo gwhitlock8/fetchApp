@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users, only: [:create]
-  resources :dogs
+  resources :dogs, only: [:create, :index]
   resources :dog_parks
   resources :check_ins
   resources :reviews

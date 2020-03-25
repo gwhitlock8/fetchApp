@@ -37,3 +37,5 @@ fetchApp/web-report/
 .DS_Store
 
 .env
+
+client_secret.json

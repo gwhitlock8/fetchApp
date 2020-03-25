@@ -62,6 +62,7 @@ const AuthScreen = props => {
 
   useEffect(() => {
     if (error) {
+      console.log(error);
       Alert.alert("An Error Occurred!", error, [{ text: "OK" }]);
     }
   }, [error]);
@@ -79,7 +80,6 @@ const AuthScreen = props => {
         formState.inputValues.state,
         formState.inputValues.zip
       );
-      console.log(action);
     } else {
       action = authActions.login(
         formState.inputValues.email,
@@ -90,7 +90,6 @@ const AuthScreen = props => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      console.log("SIGNUP action", action);
       props.navigation.navigate("UserParks");
     } catch (err) {
       setError(err.message);

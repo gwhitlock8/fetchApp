@@ -1,9 +1,16 @@
-import { DOG_PARKS } from "../../data/dummy-data";
+import { SET_DOG_PARKS } from "../actions/dog_park";
 
 const initialState = {
-  allDogParks: DOG_PARKS
+  allDogParks: []
 };
 
 export default (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case SET_DOG_PARKS:
+      return {
+        allDogParks: action.parks
+      };
+    default:
+      return state;
+  }
 };

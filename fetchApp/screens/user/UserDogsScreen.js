@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Alert, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -8,7 +8,7 @@ import Dog from "../../components/Dog";
 import * as dogActions from "../../store/actions/dog";
 
 const UserDogsScreen = props => {
-  const dogs = useSelector(state => state.dogs.allDogs);
+  const dogs = useSelector(state => state.dogs.userDogs);
 
   const deleteHandler = id => {
     Alert.alert("Are you sure?", "Do you really want to delete this pup?", [
@@ -24,6 +24,10 @@ const UserDogsScreen = props => {
   };
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(dogActions.fetchDogs());
+  }, [dispatch]);
 
   return (
     <FlatList

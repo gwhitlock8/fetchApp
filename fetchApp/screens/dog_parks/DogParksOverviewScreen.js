@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import DogPark from "../../components/DogPark";
+import * as dogParkActions from "../../store/actions/dog_park";
 import * as checkInActions from "../../store/actions/check_ins";
 
 const DogParksOverviewScreen = props => {
@@ -10,9 +11,14 @@ const DogParksOverviewScreen = props => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(dogParkActions.fetchDogParks());
+  }, [dispatch]);
+
   return (
     <FlatList
       data={dogParks}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={itemData => {
         return (
           <DogPark

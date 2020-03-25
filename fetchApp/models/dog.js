@@ -1,6 +1,7 @@
 export default class Dog {
   constructor(
     id,
+    user_id,
     name,
     breed,
     age,
@@ -11,6 +12,7 @@ export default class Dog {
     imageUrl
   ) {
     this.id = id;
+    this.user_id = user_id;
     this.name = name;
     this.breed = breed;
     this.age = age;

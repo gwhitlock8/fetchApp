@@ -29,17 +29,14 @@ export const signup = (
         zip
       })
     });
-    console.log(response);
 
-    if (response.code == 500) {
+    if (!response.ok) {
       const errorResData = await response.json();
-      console.log("SIGNUP error response data >>>> ", errorResData);
       let message = errorResData.message;
-      throw new Error(message);
+      throw Error(message);
     }
 
     const resData = await response.json();
-    console.log("SIGNUP response data >>>> ", resData);
     dispatch({
       type: SIGNUP,
       user: resData.user,
@@ -65,12 +62,10 @@ export const login = (email, password) => {
     if (!response.ok) {
       const errorResData = await response.json();
       const message = errorResData.message;
-      console.log("error response data >>>> ", errorResData);
-      throw new Error(message);
+      throw Error(message);
     }
 
     const resData = await response.json();
-    console.log("response data >>>> ", resData);
     dispatch({
       type: LOGIN,
       user: resData.user,

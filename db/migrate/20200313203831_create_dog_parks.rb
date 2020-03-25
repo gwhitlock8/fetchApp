@@ -6,8 +6,8 @@ class CreateDogParks < ActiveRecord::Migration[6.0]
       t.string :description
       t.string :overall_rating
       t.string :imageUrl
-      t.boolean :fenced?
-      t.boolean :off_leash?
+      t.boolean :fenced
+      t.boolean :off_leash
 
       t.timestamps
     end
