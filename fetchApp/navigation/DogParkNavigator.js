@@ -11,7 +11,7 @@ import DogParkDetailsScreen from "../screens/dog_parks/DogParkDetailsScreen";
 import CheckInsScreen from "../screens/dog_parks/CheckInsScreen";
 import Colors from "../constants/Colors";
 
-import defaultStackNavigationOptions from "./defaultStackNavOptions";
+import { defaultNavOptions } from "./defaultNavOptions";
 
 export const DogParkNavigator = createStackNavigator(
   {
@@ -20,19 +20,6 @@ export const DogParkNavigator = createStackNavigator(
     CheckIns: CheckInsScreen
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.OS === "android" ? Colors.primary : ""
-      },
-      headerTitleStyle: {
-        fontFamily: "noto-sans-bold"
-      },
-      headerBackTitleStyle: {
-        fontFamily: "noto-sans"
-      },
-      headerBackTitleTintColor: Colors.primary,
-      headerTintColor:
-        Platform.OS === "android" ? Colors.secondary : Colors.primary
-    }
+    defaultNavigationOptions: defaultNavOptions
   }
 );

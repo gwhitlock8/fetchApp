@@ -56,7 +56,7 @@ const UserDogsScreen = props => {
   if (!isLoading && dogs.length === 0) {
     return (
       <View style={styles.centered}>
-        <Text>
+        <Text style={{ textAlign: "center" }}>
           No dogs found. Go ahead and create your first dog profile by clicking
           the button in the top right of the screen.
         </Text>
