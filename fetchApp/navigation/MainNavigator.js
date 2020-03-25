@@ -12,6 +12,7 @@ import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { DogParkNavigator } from "./DogParkNavigator";
 import { UserNavigator } from "./UserNavigator";
 import Auth from "../screens/user/AuthScreen";
+import StartupScreen from "../screens/StartupScreen";
 
 import Colors from "../constants/Colors";
 import { defaultStackNavigationOptions } from "./defaultStackNavOptions";
@@ -81,6 +82,7 @@ const MainNavigator = createStackNavigator({
 
 export default createAppContainer(
   createSwitchNavigator({
+    Startup: StartupScreen,
     Auth: Auth,
     Main: MainNavigator
   })

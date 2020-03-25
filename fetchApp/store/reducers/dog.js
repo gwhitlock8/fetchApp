@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
       const enteredDog = action.dog;
       const newDog = new Dog(
         enteredDog.id,
+        enteredDog.userId,
         enteredDog.name,
         enteredDog.breed,
         enteredDog.age,
@@ -30,7 +31,8 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        allDogs: state.allDogs.concat(newDog)
+        allDogs: state.allDogs.concat(newDog),
+        userDogs: state.userDogs.concat(newDog)
       };
     case UPDATE_DOG:
       const dogIndex = state.allDogs.findIndex(dog => dog.id === action.id);
@@ -57,7 +59,8 @@ export default (state = initialState, action) => {
     case DELETE_DOG:
       return {
         ...state,
-        allDogs: state.allDogs.filter(dog => dog.id !== action.dogId)
+        allDogs: state.allDogs.filter(dog => dog.id !== action.id),
+        userDogs: state.userDogs.filter(dog => dog.id !== action.id)
       };
   }
   return state;

@@ -40,9 +40,18 @@ export const fetchDogs = () => {
 };
 
 export const deleteDog = dogId => {
-  return {
-    type: DELETE_DOG,
-    dogId: dogId
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+
+    const response = await fetch(`http://localhost:3000/dogs/${dogId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
+    dispatch({ type: DELETE_DOG, id: dogId });
   };
 };
 
@@ -95,7 +104,8 @@ export const createDog = (
         temperment,
         likes,
         dislikes,
-        imageUrl
+        imageUrl,
+        userId
       }
     });
   };

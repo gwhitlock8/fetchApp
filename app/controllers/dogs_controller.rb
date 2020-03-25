@@ -25,6 +25,13 @@ class DogsController < ApplicationController
         end
     end
 
+    def destroy
+        puts params
+        dog = Dog.find(params[:id])
+        dog.destroy
+        render json: {message: 'deleted'}, status: :ok
+    end
+
     private
 
     def dog_params
