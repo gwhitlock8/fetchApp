@@ -72,7 +72,6 @@ export const login = (email, password) => {
     const resData = await response.json();
     dispatch(authenticate(resData.user, resData.jwt));
     const expirationDate = new Date(new Date().getTime() + 10000 * 1000);
-    console.log(expirationDate);
     saveDataToStorage(resData.jwt, resData.user, expirationDate);
   };
 };

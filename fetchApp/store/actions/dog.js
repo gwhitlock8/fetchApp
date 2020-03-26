@@ -16,7 +16,6 @@ export const fetchDogs = () => {
     });
 
     const resData = await response.json();
-    console.log(resData.dogs);
     const loadedDogs = [];
     resData.dogs.forEach(dog => {
       loadedDogs.push(
@@ -69,7 +68,6 @@ export const createDog = (
     //execute async code
     const token = getState().auth.token;
     const userId = getState().auth.user.id;
-    console.log(token);
     const response = await fetch("http://localhost:3000/dogs", {
       method: "POST",
       headers: {
@@ -91,8 +89,6 @@ export const createDog = (
     });
 
     const resData = await response.json();
-
-    console.log(resData);
 
     dispatch({
       type: CREATE_DOG,
@@ -145,8 +141,6 @@ export const updateDog = (
     });
 
     const resData = await response.json();
-
-    console.log(resData);
 
     dispatch({
       type: UPDATE_DOG,

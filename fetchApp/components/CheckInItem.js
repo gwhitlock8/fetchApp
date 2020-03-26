@@ -1,14 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import { ListItem } from "react-native-elements";
 
 const CheckInItem = props => {
   return (
-    <View>
-      <Text>
-        <Text>Dog Image </Text> <Text>Dog Name</Text>
-      </Text>
-      <Button title="View Details" />
-    </View>
+    <ListItem
+      key={props.id}
+      title={props.name}
+      leftAvatar={props.imageUrl}
+      subtitle={props.subtitle}
+      bottomDivider
+      rightIcon={props.checkoutIcon}
+      onPress={props.onCheckout}
+    />
   );
 };
 

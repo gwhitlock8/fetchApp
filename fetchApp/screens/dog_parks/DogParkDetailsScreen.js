@@ -33,20 +33,27 @@ const DogParkDetailsScreen = props => {
     state.dogParks.allDogParks.find(park => park.id === dogParkId)
   );
 
+  const allDogs = useSelector(state => state.dogs.allDogs);
   const userDogs = useSelector(state => state.dogs.userDogs);
   const checkIns = useSelector(state => state.checkIns.allCheckIns);
   const availableDogs = [];
   const checkedInDogs = [];
+  const checkInDogsIds = checkIns.map(checkin => checkin.dog_id);
 
   const dogsAvailbleForCheckin = () => {
     userDogs.forEach(dog =>
-      checkIns.includes(dog) ? availableDogs.push(dog) : ""
+      checkInDogsIds.includes(dog.id) ? "" : availableDogs.push(dog)
     );
   };
 
-  useEffect(() => {
-    dogsAvailbleForCheckin();
-  }, []);
+  dogsAvailbleForCheckin();
+
+  console.log(
+    "AVAILABLE DOGS >>>>> ",
+    availableDogs,
+    "CHECKED IN DOGS >>>>>>>> ",
+    checkedInDogs
+  );
 
   const dispatch = useDispatch();
 
@@ -148,7 +155,8 @@ const DogParkDetailsScreen = props => {
               <TouchableHighlight
                 style={{
                   ...styles.openButton,
-                  backgroundColor: Colors.primary
+                  backgroundColor: Colors.primary,
+                  width: 130
                 }}
                 onPress={() => {
                   checkedInDogs.forEach(dog => {
@@ -157,8 +165,35 @@ const DogParkDetailsScreen = props => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={{ fontFamily: "noto-sans-bold", color: "white" }}>
+                <Text
+                  style={{
+                    fontFamily: "noto-sans-bold",
+                    color: "white",
+                    textAlign: "center"
+                  }}
+                >
                   Check In Dogs
+                </Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={{
+                  ...styles.openButton,
+                  backgroundColor: Colors.secondary,
+                  marginTop: 10,
+                  width: 130
+                }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "noto-sans-bold",
+                    color: "white",
+                    textAlign: "center"
+                  }}
+                >
+                  Close
                 </Text>
               </TouchableHighlight>
             </View>

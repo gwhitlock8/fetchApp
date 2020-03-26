@@ -81,8 +81,6 @@ const CreateEditDogScreen = props => {
       );
       return;
     }
-    console.log("test", formState.inputValues.name);
-    console.log("id", dogId);
 
     if (editedDog) {
       dispatch(

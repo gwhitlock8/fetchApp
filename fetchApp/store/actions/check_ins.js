@@ -21,7 +21,6 @@ export const checkIn = (dogParkId, dogId) => {
     });
 
     const resData = await response.json();
-    console.log(resData);
 
     dispatch({
       type: CREATE_CHECK_IN,
