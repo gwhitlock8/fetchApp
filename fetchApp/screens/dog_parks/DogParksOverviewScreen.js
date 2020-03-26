@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, View, ActivityIndicator, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
+import HeaderButton from "../../components/UI/HeaderButton";
 import DogPark from "../../components/DogPark";
 import * as dogParkActions from "../../store/actions/dog_park";
 import * as checkInActions from "../../store/actions/check_ins";
@@ -15,12 +17,13 @@ const DogParksOverviewScreen = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const loadParks = async () => {
+    const loadParksAndCheckIns = async () => {
       setIsLoading(true);
       await dispatch(dogParkActions.fetchDogParks());
+      await dispatch(checkInActions.fetchCheckIns());
       setIsLoading(false);
     };
-    loadParks();
+    loadParksAndCheckIns();
   }, [dispatch]);
 
   if (isLoading) {
@@ -57,8 +60,21 @@ const DogParksOverviewScreen = props => {
   );
 };
 
-DogParksOverviewScreen.navigationOptions = {
-  headerTitle: "Austin Dog Parks"
+DogParksOverviewScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Austin Dog Parks",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 const styles = StyleSheet.create({

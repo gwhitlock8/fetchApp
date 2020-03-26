@@ -1,25 +1,26 @@
 import React from "react";
-import { TouchableHighlight, Image } from "react-native";
 
 import { createStackNavigator } from "react-navigation-stack";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { defaultNavOptions } from "./defaultNavOptions";
 
-import UserDogScreen from "../screens/user/UserDogsScreen";
-import CreateEditDogScreen from "../screens/user/CreateEditDogScreen";
-import DogDetailScreen from "../screens/user/DogDetailScreen";
+import UserProfileScreen from "../screens/user/UserProfileScreen";
+import PastCheckInsScreen from "../screens/user/PastCheckInsScreen";
 import Colors from "../constants/Colors";
 
 export const UserNavigator = createStackNavigator(
   {
-    UserDogs: {
-      screen: UserDogScreen,
-      navigationOptions: { ...defaultStackNavigationOptions }
-    },
-    CreateEditDog: CreateEditDogScreen,
-    DogDetails: DogDetailScreen
+    Profile: UserProfileScreen,
+    PastCheckIns: PastCheckInsScreen
   },
   {
+    navigationOptions: {
+      drawerLabel: "User Profile",
+      drawerIcon: drawerConfig => (
+        <MaterialIcons name="person" color={Colors.primary} size={23} />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );

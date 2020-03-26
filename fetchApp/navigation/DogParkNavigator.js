@@ -1,9 +1,7 @@
 import React from "react";
-import { TouchableHighlight, Image } from "react-native";
 
 import { createStackNavigator } from "react-navigation-stack";
-import { Platform } from "react-native";
-import { Entypo, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import DogParksOverviewScreen from "../screens/dog_parks/DogParksOverviewScreen";
 import DogParkDetailsScreen from "../screens/dog_parks/DogParkDetailsScreen";
@@ -20,6 +18,12 @@ export const DogParkNavigator = createStackNavigator(
     CheckIns: CheckInsScreen
   },
   {
+    navigationOptions: {
+      drawerLabel: "Parks",
+      drawerIcon: drawerConfig => (
+        <MaterialCommunityIcons name="tree" color={Colors.primary} size={23} />
+      )
+    },
     defaultNavigationOptions: defaultNavOptions
   }
 );

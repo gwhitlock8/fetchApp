@@ -7,11 +7,11 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 
-import { Platform, SafeAreaView, Button } from "react-native";
-import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
+import { SafeAreaView, Button } from "react-native";
 import { useDispatch } from "react-redux";
 
 import { DogParkNavigator } from "./DogParkNavigator";
+import { DogNavigator } from "./DogNavigator";
 import { UserNavigator } from "./UserNavigator";
 import Auth from "../screens/user/AuthScreen";
 import StartupScreen from "../screens/StartupScreen";
@@ -21,51 +21,11 @@ import * as authActions from "../store/actions/auth";
 
 import Colors from "../constants/Colors";
 
-const userParkTabScreenConfig = {
-  UserDogs: {
-    screen: UserNavigator,
-    navigationOptions: {
-      tabBarIcon: tabInfo => {
-        return <Feather name="user" size={25} color={Colors.secondary} />;
-      },
-      tabColor: Colors.primary,
-      tabBarLabel:
-        Platform.OS === "android" ? (
-          <Text styles={{ fontFamily: "noto-sans-bold" }}>User Info</Text>
-        ) : (
-          "User Info"
-        )
-    }
-  },
-  DogParks: {
-    screen: DogParkNavigator,
-    navigationOptions: {
-      tabBarIcon: tabInfo => {
-        return (
-          <MaterialCommunityIcons
-            name="bone"
-            size={25}
-            color={Colors.secondary}
-          />
-        );
-      },
-      tabColor: Colors.primary,
-      tabBarLabel:
-        Platform.OS === "android" ? (
-          <Text styles={{ fontFamily: "noto-sans-bold" }}>Dog Parks</Text>
-        ) : (
-          "Dog Parks"
-        )
-    }
-  }
-};
-
 const AppDrawer = createDrawerNavigator(
   {
-    Dogs: UserNavigator,
+    Dogs: DogNavigator,
     DogParks: DogParkNavigator,
-    Profile: UserProfileScreen,
-    PastCheckIns: PastCheckInsScreen
+    User: UserNavigator
   },
   {
     contentOptions: {

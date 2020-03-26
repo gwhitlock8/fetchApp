@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,15 @@ import {
   Button,
   StyleSheet,
   ScrollView,
-  Platform
+  Platform,
+  Modal,
+  Alert,
+  FlatList,
+  TouchableHighlight
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -20,82 +25,147 @@ import HeaderButton from "../../components/UI/HeaderButton";
 import Colors from "../../constants/Colors";
 
 const DogParkDetailsScreen = props => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const dogParkId = props.navigation.getParam("dogParkId");
 
   const selectedDogPark = useSelector(state =>
     state.dogParks.allDogParks.find(park => park.id === dogParkId)
   );
 
+  const userDogs = useSelector(state => state.dogs.userDogs);
   const checkIns = useSelector(state => state.checkIns.allCheckIns);
-  const isCheckedIn = Object.keys(checkIns).find(id => id === dogParkId);
+  const availableDogs = [];
+  const checkedInDogs = [];
+
+  const dogsAvailbleForCheckin = () => {
+    userDogs.forEach(dog =>
+      checkIns.includes(dog) ? availableDogs.push(dog) : ""
+    );
+  };
+
+  useEffect(() => {
+    dogsAvailbleForCheckin();
+  }, []);
 
   const dispatch = useDispatch();
 
   return (
-    <ScrollView>
-      <Image style={styles.image} source={{ uri: selectedDogPark.imageUrl }} />
-      <View style={styles.actions}>
-        {isCheckedIn ? (
-          <Button
-            color={Colors.primarySecond}
-            title="Checkout"
-            onPress={() => {
-              dispatch(checkInActions.checkout(selectedDogPark));
-            }}
-          />
-        ) : (
+    <View>
+      <ScrollView>
+        <Image
+          style={styles.image}
+          source={{ uri: selectedDogPark.imageUrl }}
+        />
+        <View style={styles.actions}>
           <Button
             color={Colors.primarySecond}
             title="Check In"
             onPress={() => {
-              dispatch(checkInActions.checkIn(selectedDogPark));
+              availableDogs.length
+                ? setModalVisible(!modalVisible)
+                : Alert.alert(
+                    "All your dogs are already checked in!",
+                    "Please checkout of one of the other parks before checking into a new park",
+                    [{ text: "OK" }]
+                  );
             }}
           />
-        )}
+        </View>
+        <Text style={styles.location}>{selectedDogPark.location}</Text>
+        <Text style={styles.description}>{selectedDogPark.description}</Text>
+        <View style={styles.icons}>
+          {selectedDogPark.isOffLeash ? (
+            <View>
+              <MaterialCommunityIcons
+                name="dog-side"
+                size={32}
+                style={styles.leashIcon}
+              />
+              <Text>Off-Leash</Text>
+            </View>
+          ) : (
+            <View>
+              <MaterialCommunityIcons
+                name="dog-service"
+                size={32}
+                style={styles.leashIcon}
+              />
+              <Text>Leash Required</Text>
+            </View>
+          )}
+          {selectedDogPark.isFenced ? (
+            <View>
+              <Image
+                source={require("../../assets/images/fenceIcon.png")}
+                fadeDuration={0}
+                style={styles.fenceIcon}
+              />
+              <Text>Fenced Area</Text>
+            </View>
+          ) : (
+            <View>
+              <Image
+                source={require("../../assets/images/noFenceIcon.png")}
+                fadeDuration={0}
+                style={styles.fenceIcon}
+              />
+              <Text style={{ textAlign: "center" }}>No Fenced Area</Text>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert(`You have checked in to ${selectedDogPark.name}`);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <FlatList
+                data={availableDogs}
+                keyExtractor={item => item.id.toString()}
+                renderItem={itemData => {
+                  return (
+                    <BouncyCheckbox
+                      isChecked={false}
+                      fillColor={Colors.tertiary}
+                      fontFamily="noto-sans-bold"
+                      text={itemData.item.name}
+                      onPress={checked => {
+                        checked
+                          ? checkedInDogs.push(itemData.item)
+                          : checkedInDogs.filter(dog => dog !== itemData.item);
+                      }}
+                    />
+                  );
+                }}
+              />
+              <TouchableHighlight
+                style={{
+                  ...styles.openButton,
+                  backgroundColor: Colors.primary
+                }}
+                onPress={() => {
+                  checkedInDogs.forEach(dog => {
+                    dispatch(checkInActions.checkIn(dogParkId, dog.id));
+                  });
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={{ fontFamily: "noto-sans-bold", color: "white" }}>
+                  Check In Dogs
+                </Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
       </View>
-      <Text style={styles.location}>{selectedDogPark.location}</Text>
-      <Text style={styles.description}>{selectedDogPark.description}</Text>
-      <View style={styles.icons}>
-        {selectedDogPark.isOffLeash ? (
-          <View>
-            <MaterialCommunityIcons
-              name="dog-side"
-              size={32}
-              style={styles.leashIcon}
-            />
-            <Text>Off-Leash</Text>
-          </View>
-        ) : (
-          <View>
-            <MaterialCommunityIcons
-              name="dog-service"
-              size={32}
-              style={styles.leashIcon}
-            />
-            <Text>Leash Required</Text>
-          </View>
-        )}
-        {selectedDogPark.isFenced ? (
-          <View>
-            <Image
-              source={require("../../assets/images/fenceIcon.png")}
-              fadeDuration={0}
-              style={styles.fenceIcon}
-            />
-            <Text>Fenced Area</Text>
-          </View>
-        ) : (
-          <View>
-            <Image
-              source={require("../../assets/images/noFenceIcon.png")}
-              fadeDuration={0}
-              style={styles.fenceIcon}
-            />
-            <Text style={{ textAlign: "center" }}>No Fenced Area</Text>
-          </View>
-        )}
-      </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -108,7 +178,9 @@ DogParkDetailsScreen.navigationOptions = navData => {
           title="Check-Ins"
           iconName={Platform.OS === "android" ? "md-pin" : "ios-pin"}
           onPress={() => {
-            navData.navigation.navigate("CheckIns");
+            navData.navigation.navigate("CheckIns", {
+              dogParkId: navData.navigation.getParam("dogParkId")
+            });
           }}
         />
       </HeaderButtons>
@@ -117,6 +189,34 @@ DogParkDetailsScreen.navigationOptions = navData => {
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 175,
+    maxHeight: 285
+  },
+  openButton: {
+    backgroundColor: Colors.secondary,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
   image: {
     width: "100%",
     height: 300

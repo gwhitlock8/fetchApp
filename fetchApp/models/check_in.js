@@ -1,7 +1,8 @@
 class CheckIn {
-  constructor(id, dogParkName) {
+  constructor(id, dog_park_id, dog_id) {
     this.id = id;
-    this.dogParkName = dogParkName;
+    this.dog_park_id = dog_park_id;
+    this.dog_id = dog_id;
   }
 }
 

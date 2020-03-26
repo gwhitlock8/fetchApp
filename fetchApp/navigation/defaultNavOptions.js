@@ -7,10 +7,10 @@ export const defaultNavOptions = {
     backgroundColor: Platform.OS === "android" ? Colors.primary : ""
   },
   headerTitleStyle: {
-    fontFamily: "open-sans-bold"
+    fontFamily: "noto-sans-bold"
   },
   headerBackTitleStyle: {
-    fontFamily: "open-sans"
+    fontFamily: "noto-sans"
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primary
 };

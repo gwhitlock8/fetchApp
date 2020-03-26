@@ -1,28 +1,33 @@
-import { CHECK_IN, CHECKOUT } from "../actions/check_ins";
+import { CHECKOUT, SET_CHECK_INS, CREATE_CHECK_IN } from "../actions/check_ins";
 import CheckIn from "../../models/check_in";
 
 const initialState = {
-  allCheckIns: {}
+  allCheckIns: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CHECK_IN:
-      const dogPark = action.dogPark;
-      const dogParkName = dogPark.name;
+    case SET_CHECK_INS:
+      return {
+        allCheckIns: action.checkins
+      };
+    case CREATE_CHECK_IN:
+      const check_in = action.check_in;
       const newCheckIn = new CheckIn(
-        Math.round(Math.random() * 1000 + 1),
-        dogParkName
+        check_in.id,
+        check_in.dogParkId,
+        check_in.dogId
       );
       return {
         ...state,
-        allCheckIns: { ...state.allCheckIns, [dogPark.id]: newCheckIn }
+        allCheckIns: state.allCheckIns.concat(newCheckIn)
       };
     case CHECKOUT:
-      delete state.allCheckIns[action.dogPark.id];
       return {
         ...state,
-        allCheckIns: { ...state.allCheckIns }
+        allCheckIns: state.allCheckIns.filter(
+          checkin => checkin.id !== action.id
+        )
       };
 
     default:

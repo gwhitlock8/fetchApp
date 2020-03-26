@@ -38,11 +38,6 @@ const DogPark = props => {
                 title="View Details"
                 onPress={props.onViewDetail}
               />
-              <Button
-                color={Colors.primary}
-                title="Check In"
-                onPress={props.onCheckIn}
-              />
             </View>
           </View>
         </TouchableComponent>
@@ -82,8 +77,7 @@ const styles = StyleSheet.create({
     fontFamily: "noto-sans"
   },
   actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     height: "20%",
     paddingHorizontal: 20
