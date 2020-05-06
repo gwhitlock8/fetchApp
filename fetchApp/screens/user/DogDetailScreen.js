@@ -40,7 +40,6 @@ const DogDetailScreen = props => {
           renderSectionHeader={({ section }) => (
             <Text style={styles.sectionHeader}>{section.title}</Text>
           )}
-          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     </View>

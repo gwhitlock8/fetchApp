@@ -39,7 +39,7 @@ const AppDrawer = createDrawerNavigator(
           <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
             <DrawerItems {...props} />
             <Button
-              title="Logout"
+              title="Logout 👋🏻"
               color={Colors.primary}
               onPress={() => {
                 dispatch(authActions.logout());

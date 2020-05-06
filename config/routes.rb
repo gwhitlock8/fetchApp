@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :users, only: [:create]
+  resources :users, only: [:create, :update]
   resources :dogs
   resources :dog_parks
   resources :check_ins

@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
   Button,
   ActivityIndicator,
-  Alert
+  Alert,
+  Image
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
@@ -229,9 +230,10 @@ const AuthScreen = props => {
       style={styles.screen}
     >
       <LinearGradient
-        colors={[Colors.primary, Colors.secondary, Colors.tertiary]}
+        colors={[Colors.primary, Colors.secondary]}
         style={styles.gradient}
       >
+        <Image source={require("../../assets/images/fetchLogoName.png")} />
         <Card style={styles.authContainer}>
           {signupFormHandler()}
           <View style={styles.buttonContainer}>
@@ -284,7 +286,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderColor: Colors.textColor,
     borderWidth: 2,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    borderRadius: 10
   }
 });
 
