@@ -1,24 +1,21 @@
-# README
+# Fetch
+#### Mobile application built during module 5 of Flatiron's Software Immersive program. This application allows the user to store their dogs' information and then check their dog into Austin-area dog parks.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Video Demo
+[![Watch the video](https://i9.ytimg.com/vi/Qx5XU4TCZ8A/mq1.jpg?sqp=CPiEnPYF&rs=AOn4CLC4esseUG2hieSYfZ4na3l6mjAsBA)](https://youtu.be/Qx5XU4TCZ8A)
 
-Things you may want to cover:
+### FrontEnd:
+- React Native
+- Redux
+- React w/ Hooks
 
-* Ruby version
+### Backend
+- Ruby on Rails
+- Postgres (https://github.com/ged/ruby-pg)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Deployment Instructions
+1. Clone the repository
+2. Run ```rails s```  in the terminal in the root directory
+3. Open another terminal window/tab and navigate into the *fetchApp* directory
+4. Run ```npm start```
+5. Once the application is running in the terminal, press ```i``` to start the iOS simulator
