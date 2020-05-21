@@ -135,7 +135,7 @@ const DogParkDetailsScreen = (props) => {
             <View style={styles.modalView}>
               <FlatList
                 data={availableDogs}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => item.name + index}
                 renderItem={(itemData) => {
                   return (
                     <BouncyCheckbox
