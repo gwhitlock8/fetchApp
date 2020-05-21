@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useReducer } from "react";
-import { View, StyleSheet, Platform, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI/HeaderButton";
@@ -14,11 +20,11 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.input]: action.value
+      [action.input]: action.value,
     };
     const updatedValidities = {
       ...state.inputValidities,
-      [action.input]: action.isValid
+      [action.input]: action.isValid,
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
@@ -27,14 +33,17 @@ const formReducer = (state, action) => {
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
-      inputValues: updatedValues
+      inputValues: updatedValues,
     };
   }
   return state;
 };
 
-const UserProfileScreen = props => {
-  const loggedInUser = useSelector(state => state.auth.user);
+const UserProfileScreen = (props) => {
+  const loggedInUser = useSelector((state) => {
+    console.log("USER", state.auth);
+    return state.auth.user;
+  });
 
   const dispatch = useDispatch();
 
@@ -46,7 +55,7 @@ const UserProfileScreen = props => {
       address: loggedInUser.address,
       city: loggedInUser.city,
       state: loggedInUser.state,
-      zip: loggedInUser.zip
+      zip: loggedInUser.zip,
     },
     inputValidities: {
       first_name: true,
@@ -55,9 +64,9 @@ const UserProfileScreen = props => {
       address: true,
       city: true,
       state: true,
-      zip: true
+      zip: true,
     },
-    formIsValid: true
+    formIsValid: true,
   });
 
   const submitHandler = useCallback(() => {
@@ -89,7 +98,7 @@ const UserProfileScreen = props => {
         type: FORM_INPUT_UPDATE,
         value: inputValue,
         isValid: inputValidity,
-        input: inputIdentifier
+        input: inputIdentifier,
       });
     },
     [dispatchFormState]
@@ -127,44 +136,44 @@ const UserProfileScreen = props => {
             keyboardType="email-address"
             email
             autoCapitalize="none"
-            initialValue={user.email}
+            initialValue={loggedInUser.email}
             onInputChange={inputChangeHandler}
           />
           <Input
             id="address"
             label="Address"
             keyboardType="default"
-            initialValue={user.address}
+            initialValue={loggedInUser.address}
             onInputChange={inputChangeHandler}
           />
           <Input
             id="city"
             label="City"
             keyboardType="default"
-            initialValue={user.city}
+            initialValue={loggedInUser.city}
             onInputChange={inputChangeHandler}
           />
           <Input
             id="state"
             label="State"
             keyboardType="default"
-            initialValue={user.state}
+            initialValue={loggedInUser.state}
             onInputChange={inputChangeHandler}
           />
           <Input
             id="zip"
             label="Zip"
             keyboardType="default"
-            initialValue={user.zip}
+            initialValue={loggedInUser.zip}
             onInputChange={inputChangeHandler}
           />
         </Card>
       </View>
-    </KeyboardAvoidingView>>
+    </KeyboardAvoidingView>
   );
 };
 
-UserProfileScreen.navigationOptions = navData => {
+UserProfileScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "Profile",
     headerLeft: () => (
@@ -189,7 +198,7 @@ UserProfileScreen.navigationOptions = navData => {
           }
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -197,8 +206,8 @@ const styles = StyleSheet.create({
   profileContainer: {
     marginTop: -75,
     width: "80%",
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export default UserProfileScreen;

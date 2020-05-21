@@ -10,7 +10,7 @@ import {
   Modal,
   Alert,
   FlatList,
-  TouchableHighlight
+  TouchableHighlight,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -24,24 +24,24 @@ import HeaderButton from "../../components/UI/HeaderButton";
 
 import Colors from "../../constants/Colors";
 
-const DogParkDetailsScreen = props => {
+const DogParkDetailsScreen = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const dogParkId = props.navigation.getParam("dogParkId");
 
-  const selectedDogPark = useSelector(state =>
-    state.dogParks.allDogParks.find(park => park.id === dogParkId)
+  const selectedDogPark = useSelector((state) =>
+    state.dogParks.allDogParks.find((park) => park.id === dogParkId)
   );
 
-  const allDogs = useSelector(state => state.dogs.allDogs);
-  const userDogs = useSelector(state => state.dogs.userDogs);
-  const checkIns = useSelector(state => state.checkIns.allCheckIns);
+  const allDogs = useSelector((state) => state.dogs.allDogs);
+  const userDogs = useSelector((state) => state.dogs.userDogs);
+  const checkIns = useSelector((state) => state.checkIns.allCheckIns);
   const availableDogs = [];
   const checkedInDogs = [];
-  const checkInDogsIds = checkIns.map(checkin => checkin.dog_id);
+  const checkInDogsIds = checkIns.map((checkin) => checkin.dog_id);
 
   const dogsAvailbleForCheckin = () => {
-    userDogs.forEach(dog =>
+    userDogs.forEach((dog) =>
       checkInDogsIds.includes(dog.id) ? "" : availableDogs.push(dog)
     );
   };
@@ -135,18 +135,20 @@ const DogParkDetailsScreen = props => {
             <View style={styles.modalView}>
               <FlatList
                 data={availableDogs}
-                keyExtractor={item => item.id.toString()}
-                renderItem={itemData => {
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={(itemData) => {
                   return (
                     <BouncyCheckbox
                       isChecked={false}
                       fillColor={Colors.tertiary}
                       fontFamily="noto-sans-bold"
                       text={itemData.item.name}
-                      onPress={checked => {
+                      onPress={(checked) => {
                         checked
                           ? checkedInDogs.push(itemData.item)
-                          : checkedInDogs.filter(dog => dog !== itemData.item);
+                          : checkedInDogs.filter(
+                              (dog) => dog !== itemData.item
+                            );
                       }}
                     />
                   );
@@ -156,10 +158,10 @@ const DogParkDetailsScreen = props => {
                 style={{
                   ...styles.openButton,
                   backgroundColor: Colors.primary,
-                  width: 130
+                  width: 130,
                 }}
                 onPress={() => {
-                  checkedInDogs.forEach(dog => {
+                  checkedInDogs.forEach((dog) => {
                     dispatch(checkInActions.checkIn(dogParkId, dog.id));
                   });
                   setModalVisible(!modalVisible);
@@ -169,7 +171,7 @@ const DogParkDetailsScreen = props => {
                   style={{
                     fontFamily: "noto-sans-bold",
                     color: "white",
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   Check In Dogs
@@ -180,7 +182,7 @@ const DogParkDetailsScreen = props => {
                   ...styles.openButton,
                   backgroundColor: Colors.secondary,
                   marginTop: 10,
-                  width: 130
+                  width: 130,
                 }}
                 onPress={() => {
                   setModalVisible(!modalVisible);
@@ -190,7 +192,7 @@ const DogParkDetailsScreen = props => {
                   style={{
                     fontFamily: "noto-sans-bold",
                     color: "white",
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   Close
@@ -204,7 +206,7 @@ const DogParkDetailsScreen = props => {
   );
 };
 
-DogParkDetailsScreen.navigationOptions = navData => {
+DogParkDetailsScreen.navigationOptions = (navData) => {
   return {
     headerTitle: navData.navigation.getParam("dogParkName"),
     headerRight: () => (
@@ -214,12 +216,12 @@ DogParkDetailsScreen.navigationOptions = navData => {
           iconName={Platform.OS === "android" ? "md-pin" : "ios-pin"}
           onPress={() => {
             navData.navigation.navigate("CheckIns", {
-              dogParkId: navData.navigation.getParam("dogParkId")
+              dogParkId: navData.navigation.getParam("dogParkId"),
             });
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -229,13 +231,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 175,
-    maxHeight: 285
+    maxHeight: 285,
   },
   openButton: {
     backgroundColor: Colors.secondary,
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   modalView: {
     margin: 20,
@@ -246,49 +248,49 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5
+    elevation: 5,
   },
   image: {
     width: "100%",
-    height: 300
+    height: 300,
   },
   actions: {
     marginVertical: 10,
-    alignItems: "center"
+    alignItems: "center",
   },
   location: {
     fontSize: 20,
     marginVertical: 20,
     color: Colors.tertiary,
     textAlign: "center",
-    fontFamily: "noto-sans"
+    fontFamily: "noto-sans",
   },
   description: {
     color: Colors.textColor,
     marginHorizontal: 20,
     alignItems: "center",
-    fontFamily: "noto-sans"
+    fontFamily: "noto-sans",
   },
   icons: {
     flexDirection: "row",
     justifyContent: "space-around",
-    margin: 20
+    margin: 20,
   },
   leashIcon: {
     justifyContent: "center",
     alignContent: "center",
-    textAlign: "center"
+    textAlign: "center",
   },
   fenceIcon: {
     justifyContent: "center",
     alignSelf: "center",
     width: 35,
-    height: 35
-  }
+    height: 35,
+  },
 });
 
 export default DogParkDetailsScreen;

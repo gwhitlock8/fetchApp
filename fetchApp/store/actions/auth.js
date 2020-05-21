@@ -17,12 +17,12 @@ export const signup = (
   state,
   zip
 ) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const response = await fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
@@ -32,12 +32,13 @@ export const signup = (
         address,
         city,
         state,
-        zip
-      })
+        zip,
+      }),
     });
 
     if (!response.ok) {
       const errorResData = await response.json();
+      console.log(errorResData);
       let message = errorResData.message;
       throw Error(message);
     }
@@ -50,17 +51,17 @@ export const signup = (
 };
 
 export const login = (email, password) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
       body: JSON.stringify({
         email,
-        password
-      })
+        password,
+      }),
     });
 
     if (!response.ok) {
@@ -78,7 +79,7 @@ export const login = (email, password) => {
 
 export const logout = () => {
   return {
-    type: LOGOUT
+    type: LOGOUT,
   };
 };
 
@@ -88,7 +89,7 @@ const saveDataToStorage = (token, user, expirationDate) => {
     JSON.stringify({
       token: token,
       user: user,
-      expiryDate: expirationDate.toISOString()
+      expiryDate: expirationDate.toISOString(),
     })
   );
 };
