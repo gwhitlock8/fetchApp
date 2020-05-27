@@ -2,7 +2,7 @@
 #### Mobile application built during module 5 of Flatiron's Software Immersive program. This application allows the user to store their dogs' information and then check their dog into Austin-area dog parks.
 
 ### Video Demo
-[![Watch the video](https://i9.ytimg.com/vi/Qx5XU4TCZ8A/mq1.jpg?sqp=CPiEnPYF&rs=AOn4CLC4esseUG2hieSYfZ4na3l6mjAsBA)](https://youtu.be/Qx5XU4TCZ8A)
+[![Watch the video](https://img.youtube.com/vi/Qx5XU4TCZ8A/0.jpg)](https://youtu.be/Qx5XU4TCZ8A)
 
 ### FrontEnd:
 - React Native
