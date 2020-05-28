@@ -4,7 +4,7 @@ import Dog from "../../models/dog";
 
 const initialState = {
   allDogs: [],
-  userDogs: []
+  userDogs: [],
 };
 
 export default (state = initialState, action) => {
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case SET_DOGS:
       return {
         allDogs: action.dogs,
-        userDogs: action.dogs.filter(prod => prod.user_id === action.userId)
+        userDogs: action.dogs.filter((prod) => prod.user_id === action.userId),
       };
     case CREATE_DOG:
       const enteredDog = action.dog;
@@ -32,13 +32,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allDogs: state.allDogs.concat(newDog),
-        userDogs: state.userDogs.concat(newDog)
+        userDogs: state.userDogs.concat(newDog),
       };
     case UPDATE_DOG:
-      const dogIndex = state.allDogs.findIndex(dog => dog.id === action.id);
       const newInfoDog = action.dog;
       const updatedDog = new Dog(
-        action.id,
+        newInfoDog.dogId,
+        newInfoDog.userId,
         newInfoDog.name,
         newInfoDog.breed,
         newInfoDog.age,
@@ -49,18 +49,29 @@ export default (state = initialState, action) => {
         newInfoDog.imageUrl
       );
 
-      const updatedDogs = [...state.allDogs];
-      updatedDogs[dogIndex] = updatedDog;
+      const userDogIndex = state.userDogs.findIndex(
+        (dog) => dog.id === newInfoDog.dogId
+      );
+      const updatedUserDogs = [...state.userDogs];
+      updatedUserDogs[userDogIndex] = updatedDog;
+
+      const allDogIndex = state.allDogs.findIndex(
+        (dog) => dog.id === newInfoDog.dogId
+      );
+      const updatedAllDogs = [...state.allDogs];
+      updatedAllDogs[allDogIndex] = updatedDog;
+      console.log("updatedDogs", updatedUserDogs, "dogIndex", userDogIndex);
 
       return {
         ...state,
-        allDogs: updatedDogs
+        allDogs: updatedAllDogs,
+        userDogs: updatedUserDogs,
       };
     case DELETE_DOG:
       return {
         ...state,
-        allDogs: state.allDogs.filter(dog => dog.id !== action.id),
-        userDogs: state.userDogs.filter(dog => dog.id !== action.id)
+        allDogs: state.allDogs.filter((dog) => dog.id !== action.id),
+        userDogs: state.userDogs.filter((dog) => dog.id !== action.id),
       };
   }
   return state;

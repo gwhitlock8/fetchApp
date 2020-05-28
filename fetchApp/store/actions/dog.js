@@ -11,13 +11,13 @@ export const fetchDogs = () => {
     const userId = getState().auth.user.id;
     const response = await fetch("http://localhost:3000/dogs", {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const resData = await response.json();
     const loadedDogs = [];
-    resData.dogs.forEach(dog => {
+    resData.dogs.forEach((dog) => {
       loadedDogs.push(
         new Dog(
           dog.id,
@@ -38,7 +38,7 @@ export const fetchDogs = () => {
   };
 };
 
-export const deleteDog = dogId => {
+export const deleteDog = (dogId) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
 
@@ -47,9 +47,16 @@ export const deleteDog = dogId => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    if (!response.ok) {
+      throw new Error("Something went wrong!");
+    }
+
+    const resData = await response.json();
+
     dispatch({ type: DELETE_DOG, id: dogId });
   };
 };
@@ -65,7 +72,6 @@ export const createDog = (
   imageUrl
 ) => {
   return async (dispatch, getState) => {
-    //execute async code
     const token = getState().auth.token;
     const userId = getState().auth.user.id;
     const response = await fetch("http://localhost:3000/dogs", {
@@ -73,7 +79,7 @@ export const createDog = (
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         user_id: userId,
@@ -84,9 +90,13 @@ export const createDog = (
         temperment,
         likes,
         dislikes,
-        imageUrl
-      })
+        imageUrl,
+      }),
     });
+
+    if (!response.ok) {
+      throw new Error(response.errors);
+    }
 
     const resData = await response.json();
 
@@ -101,8 +111,8 @@ export const createDog = (
         likes,
         dislikes,
         imageUrl,
-        userId
-      }
+        userId,
+      },
     });
   };
 };
@@ -120,13 +130,14 @@ export const updateDog = (
 ) => {
   return async (dispatch, getState) => {
     //execute async code
+    const userId = getState().auth.user.id;
     const token = getState().auth.token;
-    const response = await fetch(`http://localhost:3000/dog/${dogId}`, {
+    const response = await fetch(`http://localhost:3000/dogs/${dogId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         name,
@@ -136,15 +147,21 @@ export const updateDog = (
         temperment,
         likes,
         dislikes,
-        imageUrl
-      })
+        imageUrl,
+      }),
     });
+
+    if (!response.ok) {
+      throw new Error(response.errors);
+    }
 
     const resData = await response.json();
 
     dispatch({
       type: UPDATE_DOG,
       dog: {
+        dogId,
+        userId,
         name,
         breed,
         age,
@@ -152,8 +169,8 @@ export const updateDog = (
         temperment,
         likes,
         dislikes,
-        imageUrl
-      }
+        imageUrl,
+      },
     });
   };
 };

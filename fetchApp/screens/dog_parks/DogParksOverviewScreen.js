@@ -9,10 +9,10 @@ import * as dogParkActions from "../../store/actions/dog_park";
 import * as checkInActions from "../../store/actions/check_ins";
 import Colors from "../../constants/Colors";
 
-const DogParksOverviewScreen = props => {
+const DogParksOverviewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const dogParks = useSelector(state => state.dogParks.allDogParks);
+  const dogParks = useSelector((state) => state.dogParks.allDogParks);
 
   const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const DogParksOverviewScreen = props => {
     <FlatList
       data={dogParks}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={itemData => {
+      renderItem={(itemData) => {
         return (
           <DogPark
             image={itemData.item.imageUrl}
@@ -47,7 +47,7 @@ const DogParksOverviewScreen = props => {
             onViewDetail={() => {
               props.navigation.navigate("DogParkDetail", {
                 dogParkId: itemData.item.id,
-                dogParkName: itemData.item.name
+                dogParkName: itemData.item.name,
               });
             }}
             onCheckIn={() => {
@@ -60,7 +60,7 @@ const DogParksOverviewScreen = props => {
   );
 };
 
-DogParksOverviewScreen.navigationOptions = navData => {
+DogParksOverviewScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "Austin Dog Parks",
     headerLeft: () => (
@@ -73,7 +73,7 @@ DogParksOverviewScreen.navigationOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   centered: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default DogParksOverviewScreen;

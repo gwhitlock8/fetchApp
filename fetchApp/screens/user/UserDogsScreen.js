@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   FlatList,
   Alert,
@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
-  Text
+  Text,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,12 +16,14 @@ import Dog from "../../components/Dog";
 import * as dogActions from "../../store/actions/dog";
 import Colors from "../../constants/Colors";
 
-const UserDogsScreen = props => {
+const UserDogsScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const dispatch = useDispatch();
 
-  const dogs = useSelector(state => state.dogs.userDogs);
+  const dogs = useSelector((state) => state.dogs.userDogs);
 
-  const deleteHandler = id => {
+  const deleteHandler = (id) => {
     Alert.alert("Are you sure?", "Do you really want to delete this pup?", [
       { text: "No", style: "default" },
       {
@@ -29,21 +31,32 @@ const UserDogsScreen = props => {
         style: "destructive",
         onPress: () => {
           dispatch(dogActions.deleteDog(id));
-        }
-      }
+        },
+      },
     ]);
   };
 
-  const dispatch = useDispatch();
+  const loadDogs = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await dispatch(dogActions.fetchDogs());
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    const loadDogs = async () => {
-      setIsLoading(true);
-      await dispatch(dogActions.fetchDogs());
-      setIsLoading(false);
+    const willFocusSub = props.navigation.addListener("willFocus", loadDogs);
+    return () => {
+      willFocusSub.remove();
     };
+  }, [loadDogs]);
+
+  useEffect(() => {
     loadDogs();
-  }, [dispatch]);
+  }, [dispatch, loadDogs]);
 
   if (isLoading) {
     return (
@@ -68,7 +81,7 @@ const UserDogsScreen = props => {
     <FlatList
       data={dogs}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={itemData => {
+      renderItem={(itemData) => {
         return (
           <Dog
             image={itemData.item.imageUrl}
@@ -77,7 +90,7 @@ const UserDogsScreen = props => {
             onViewDetail={() => {
               props.navigation.navigate("DogDetails", {
                 dogId: itemData.item.id,
-                dogName: itemData.item.name
+                dogName: itemData.item.name,
               });
             }}
             onDelete={deleteHandler.bind(this, itemData.item.id)}
@@ -88,7 +101,7 @@ const UserDogsScreen = props => {
   );
 };
 
-UserDogsScreen.navigationOptions = navData => {
+UserDogsScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "User Dogs",
     headerLeft: () => (
@@ -116,7 +129,7 @@ UserDogsScreen.navigationOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -124,8 +137,8 @@ const styles = StyleSheet.create({
   centered: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default UserDogsScreen;
