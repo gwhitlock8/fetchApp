@@ -77,7 +77,11 @@ const CreateEditDogScreen = (props) => {
     formIsValid: editedDog ? true : false,
   });
 
-  useEffect(() => {}, [error]);
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error ocurrence");
+    }
+  }, [error]);
   const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert(

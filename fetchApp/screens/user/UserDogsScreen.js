@@ -18,6 +18,7 @@ import Colors from "../../constants/Colors";
 
 const UserDogsScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
 
@@ -37,15 +38,16 @@ const UserDogsScreen = (props) => {
   };
 
   const loadDogs = useCallback(async () => {
-    setIsLoading(true);
     setError(null);
+    setIsRefreshing(true);
     try {
       await dispatch(dogActions.fetchDogs());
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
-  }, [dispatch, setIsLoading, setError]);
+
+    setIsRefreshing(false);
+  }, [dispatch, setIsRefreshing, setError]);
 
   useEffect(() => {
     const willFocusSub = props.navigation.addListener("willFocus", loadDogs);
@@ -55,7 +57,8 @@ const UserDogsScreen = (props) => {
   }, [loadDogs]);
 
   useEffect(() => {
-    loadDogs();
+    setIsLoading(true);
+    loadDogs().then(setIsLoading(false));
   }, [dispatch, loadDogs]);
 
   if (isLoading) {
@@ -79,6 +82,8 @@ const UserDogsScreen = (props) => {
 
   return (
     <FlatList
+      onRefresh={loadDogs}
+      refreshing={isRefreshing}
       data={dogs}
       keyExtractor={(item, index) => index.toString()}
       renderItem={(itemData) => {

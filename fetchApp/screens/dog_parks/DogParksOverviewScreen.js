@@ -11,19 +11,22 @@ import Colors from "../../constants/Colors";
 
 const DogParksOverviewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const dogParks = useSelector((state) => state.dogParks.allDogParks);
 
   const dispatch = useDispatch();
 
+  const loadParksAndCheckIns = async () => {
+    setIsRefreshing(true);
+    await dispatch(dogParkActions.fetchDogParks());
+    await dispatch(checkInActions.fetchCheckIns());
+    setIsRefreshing(false);
+  };
+
   useEffect(() => {
-    const loadParksAndCheckIns = async () => {
-      setIsLoading(true);
-      await dispatch(dogParkActions.fetchDogParks());
-      await dispatch(checkInActions.fetchCheckIns());
-      setIsLoading(false);
-    };
-    loadParksAndCheckIns();
+    setIsLoading(true);
+    loadParksAndCheckIns().then(setIsLoading(false));
   }, [dispatch]);
 
   if (isLoading) {
@@ -36,6 +39,8 @@ const DogParksOverviewScreen = (props) => {
 
   return (
     <FlatList
+      onRefresh={loadParksAndCheckIns}
+      refreshing={isRefreshing}
       data={dogParks}
       keyExtractor={(item, index) => index.toString()}
       renderItem={(itemData) => {

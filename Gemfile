@@ -11,7 +11,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 <<<<<<< HEAD
 gem 'puma', '~> 4.3.4'
 =======
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 4.3.4'
 >>>>>>> f7e7447de9ff7096109bf6381ef3cdce3f5c9302
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
